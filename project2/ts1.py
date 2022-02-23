@@ -1,4 +1,7 @@
-import socket
+import socket, sys
+
+args = sys.argv
+listenPort = int(args[1])
 
 try:
     ts = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -7,7 +10,7 @@ except socket.error as err:
     print('socket open error: {}\n'.format(err))
     exit()
 
-server_binding = ('', 50009)
+server_binding = ('', listenPort)
 ts.bind(server_binding)
 ts.listen(1)
 host = socket.gethostname()

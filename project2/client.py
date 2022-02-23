@@ -1,5 +1,8 @@
-import time
-import socket
+import socket, sys
+
+args = sys.argv
+hostname = (args[1])
+listenPort = int(args[2])
 
 try:
     cs = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -7,13 +10,9 @@ try:
 except socket.error as err:
     print('socket open error: {} \n'.format(err))
     exit()
-    
-# Define the port on which you want to connect to the server
-port = 50003
-localhost_addr = socket.gethostbyname(socket.gethostname())
 
 # Connect to the server on local machine
-server_binding = (localhost_addr, port)
+server_binding = (hostname, listenPort)
 cs.connect(server_binding)
 
 # Reading from file and sending to server

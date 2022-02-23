@@ -1,4 +1,11 @@
-import socket, select
+import socket, select, sys
+
+args = sys.argv
+listenPort = int(args[1])
+ts1_hostname = (args[2])
+ts1_listenPort = int(args[3])
+ts2_hostname = (args[4])
+ts2_listenPort = int(args[5])
 
 # Client Socket
 try:
@@ -7,7 +14,7 @@ try:
 except socket.error as err:
     print('socket open error: {}\n'.format(err))
     exit()
-server_binding = ('', 50003)
+server_binding = ('', listenPort)
 ss.bind(server_binding)
 ss.listen(1)
 print("[S]: Server host name is {}".format(socket.gethostname()))
@@ -23,12 +30,12 @@ try:
 except socket.error as err:
     print('socket open error: {}\n'.format(err))
     exit()
-server_binding = ('', 50009)
+server_binding = (ts1_hostname, ts1_listenPort)
 ts1.connect(server_binding)
 # ts.settimeout(5)
 print("[S]: TS1 host name is {}".format(socket.gethostname()))
-localhost_ip = (socket.gethostbyname(socket.gethostname()))
-print("[S]: TS1 IP address is {}".format(localhost_ip))
+# localhost_ip = (socket.gethostbyname(socket.gethostname()))
+# print("[S]: TS1 IP address is {}".format(localhost_ip))
 
 # TS2 Socket
 try:
@@ -37,12 +44,12 @@ try:
 except socket.error as err:
     print('socket open error: {}\n'.format(err))
     exit()
-server_binding = ('', 50010)
+server_binding = (ts2_hostname, ts2_listenPort)
 ts2.connect(server_binding)
 # ts.settimeout(5)
 print("[S]: TS2 host name is {}".format(socket.gethostname()))
-localhost_ip = (socket.gethostbyname(socket.gethostname()))
-print("[S]: TS2 IP address is {}".format(localhost_ip))
+# localhost_ip = (socket.gethostbyname(socket.gethostname()))
+# print("[S]: TS2 IP address is {}".format(localhost_ip))
 
 # Receive message from the client + Send to TS1 and TS2
 while True:
