@@ -9,10 +9,10 @@ except socket.error as err:
     exit()
     
 # Define the port on which you want to connect to the server
-port = 50007
+port = 50003
 localhost_addr = socket.gethostbyname(socket.gethostname())
 
-# connect to the server on local machine
+# Connect to the server on local machine
 server_binding = (localhost_addr, port)
 cs.connect(server_binding)
 
@@ -24,9 +24,8 @@ inf.close()
 outf = open("RESOLVED.txt", "w")
 for line in lines:
     cs.sendall(line.encode('utf-8'))
-    time.sleep(1)
     msg = cs.recv(200)
-    msg = msg.decode('utf-8') 
+    msg = msg.decode('utf-8')
     outf.write(msg)
 
 # close the client socket
